@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{{ escape(query) }} - Wikipedia Search</title>
+<link rel="stylesheet" type="text/css" href="res/bootstrap.css">
+<script src="res/jquery-1.9.1.js"></script>
+<style type="text/css">
+#container {
+    min-width: 940px;
+}
+#header {
+    line-height: 70px;
+    background-color: #eeeeee;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+#input {
+    width: 100%;
+}
+
+#logo img {
+    padding-left: 15px;
+}
+
+#summary {
+    line-height: 35px; 
+    margin-bottom: 10px;
+}
+
+.result-item {
+    margin-bottom: 20px;
+}
+
+.result-item div {
+    font-size: small;
+    line-height: 1.24;
+    margin-bottom: 1px;
+}
+
+.result-item a {
+	font-size: large;
+}
+
+strong {
+    color: #d00;
+}
+
+</style>
+</head>
+<body>
+    <div id="container">
+        <div id="header" class="row">
+            <form action="/query" class="form-search">
+            <div id="logo" class="span2"><a href="/"><img src="res/Wiki.png"></a></div>
+            <div class="span7">
+                <input type="text" id="input" name="q" value="{{ escape(query) }}">
+            </div>
+            <div class="span1">
+                <input type="submit" class="btn btn-primary" value="Search">
+            </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="span2"></div>
+            <div class="span7">
+                <div id="summary" class="muted">In total {{ escape(number) }} results ({{ time }} seconds)</div>
+                {% for title, ref, excerpt, weight in result %}            
+                <div class="result-item">
+                    <div><a href='http://simple.wikipedia.org/wiki/{{ url_escape(ref) }}'>{{ escape(title) }}</a></div>
+                    <div class="text-success">Weight: {{ weight }}</div>
+                    <div>{{ excerpt }}</div>
+                </div>
+                {% end %}
+                {% if n_pages > 1 %}
+                <div class="pagination pagination-centered"><ul>
+                    {% if page > 1 %}
+                    <li><a href="/query?q={{ url_escape(query) }}&page={{ page - 1 }}">&larr;</a></li>
+                    {% end %}
+                    {% for i in range(n_pages) %}
+                        {% if i + 1 == page %}
+                        <li class="active"><a href="javascript:void(0);">{{ i + 1 }}</a></li>
+                        {% else %}
+                        <li><a href="/query?q={{ url_escape(query) }}&page={{ i + 1 }}">{{ i + 1 }}</a></li>
+                        {% end %}
+                    {% end %}
+                    {% if page < n_pages %}
+                    <li><a href="/query?q={{ url_escape(query) }}&page={{ page + 1 }}">&rarr;</a></li>
+                    {% end %}
+                </ul></div>
+                {% end %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

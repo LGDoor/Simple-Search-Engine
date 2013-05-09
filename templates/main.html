@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Wikipedia Search</title>
+<link rel="stylesheet" type="text/css" href="res/bootstrap.css">
+<script src="res/jquery-1.9.1.js"></script>
+<script type="text/javascript">
+$(function () {
+    $("#input").focus();
+})
+</script>
+<style type="text/css">
+body {
+    margin-top: 120px;
+}
+
+form {
+    margin: 60px auto;
+}
+
+h1 {
+    font-family: 'hoefler text','times new roman', serif;
+    font-weight: normal;
+    font-size: 56pt;
+    text-shadow: 1px 1px 3px rgba(80, 80, 80, 0.8);
+}
+
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Wikipedia</h1>
+        <center>
+        <form action="/query" class="form-search">
+            <input type="text" id="input" style="width:420px" name="q">
+            <input type="submit" class="btn btn-primary" value="Search">
+        </form>
+        </center>
+    </div>
+</body>
+</html>
